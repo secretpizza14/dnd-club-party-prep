@@ -1,5 +1,7 @@
 # DnD Club Party Prep
 
+**Live site:** https://secretpizza14.github.io/dnd-club-party-prep/
+
 A one-page party planner for the DnD club: checklist, notes, guest list, and comments on everything.
 Red, white, and green with pixel headings, falling snow, and public-domain Christmas carols synthesized live in the browser.
 
