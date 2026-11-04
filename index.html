@@ -33,13 +33,19 @@ body{
 }
 
 /* ---------- snow ---------- */
-#snow{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-#snow span{position:absolute;top:-20px;color:#fff;opacity:.75;font-size:14px;animation:fall linear infinite;text-shadow:0 0 6px rgba(120,160,190,.6)}
-@keyframes fall{
-  0%{transform:translateY(-40px) rotate(0deg)}
-  100%{transform:translateY(105vh) rotate(360deg)}
+#snow{position:fixed;inset:0;pointer-events:none;z-index:45;overflow:hidden}
+#snow span{
+  position:absolute;top:-24px;color:#fff;
+  text-shadow:0 0 3px rgba(110,155,190,.95), 0 0 7px rgba(255,255,255,.55);
+  animation:fall linear infinite;
+  will-change:transform;
 }
-@media (prefers-reduced-motion: reduce){#snow{display:none}}
+@keyframes fall{
+  0%{transform:translate3d(0,-40px,0) rotate(0deg)}
+  50%{transform:translate3d(16px,50vh,0) rotate(180deg)}
+  100%{transform:translate3d(-8px,105vh,0) rotate(360deg)}
+}
+/* reduced-motion users still get the flakes, just held still (see the script) */
 
 /* ---------- header ---------- */
 header{
@@ -797,17 +803,24 @@ document.getElementById('sendBtn').addEventListener('click', async () => {
    snow
    ============================================================ */
 (function snow(){
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const box = document.getElementById('snow');
-  const flakes = ['❄','❅','❆','•'];
-  for(let i=0;i<28;i++){
+  const flakes = ['❄','❅','❆','✻','•'];
+  const count = innerWidth < 640 ? 26 : 46;
+  for(let i=0;i<count;i++){
     const s = document.createElement('span');
     s.textContent = flakes[i % flakes.length];
     s.style.left = Math.random()*100 + 'vw';
-    s.style.fontSize = (10 + Math.random()*14) + 'px';
-    s.style.animationDuration = (7 + Math.random()*9) + 's';
-    s.style.animationDelay = (-Math.random()*12) + 's';
-    s.style.opacity = (0.35 + Math.random()*0.5).toFixed(2);
+    s.style.fontSize = (8 + Math.random()*11) + 'px';
+    s.style.opacity = (0.3 + Math.random()*0.45).toFixed(2);
+    if(reduce){
+      // no falling for reduced-motion — scatter them instead
+      s.style.top = Math.random()*100 + 'vh';
+      s.style.animation = 'none';
+    } else {
+      s.style.animationDuration = (6.5 + Math.random()*9) + 's';
+      s.style.animationDelay = (-Math.random()*15).toFixed(2) + 's';
+    }
     box.appendChild(s);
   }
 })();
