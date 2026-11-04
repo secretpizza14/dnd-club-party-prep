@@ -19,8 +19,10 @@ menu, winter snow, and public-domain Christmas music synthesized in the browser.
 
 - **One self-contained `index.html`.** All CSS, JS, and the font are inline. No build
   step, no npm, no bundler, no external CSS/JS/font files.
-- **No Google, no Firebase.** Levi explicitly does not want Google involvement. Do not
-  add third-party services, accounts, analytics, or trackers without asking first.
+- **No Google, no Firebase.** Levi explicitly does not want Google involvement. The
+  approved backend is **Supabase** (signed up with GitHub), using only the public
+  `anon` key in the page and Row Level Security on the database. Ask before adding any
+  other service, account, analytics, or tracker.
 - **Never commit secrets.** The site is public. No API keys with write power, passwords,
   or tokens in the page or repo.
 - **Keep it working offline.** Opening the file directly must still work.
@@ -150,9 +152,11 @@ curl -s https://secretpizza14.github.io/dnd-club-party-prep/ | grep -c "your mar
 
 ## Known gaps
 
-- **No accounts yet.** Everything is per-browser; friends do not share a list.
-- **No shared database.** A static GitHub Pages site cannot read a file on Levi's
-  computer. Real accounts/shared data need a server or hosted backend.
+- **Accounts + shared database are being added with Supabase.** Until that ships,
+  everything is per-browser and friends do not share a list.
+- **A static GitHub Pages site cannot read a file on Levi's computer.** Real
+  accounts/shared data need a server or hosted backend; that is why Supabase exists
+  here. Do not propose a local file as the database.
 - **No data retention/pruning.** Do not auto-delete user content; if pruning is ever
   added, make it explicit and reversible.
 - The send button warns that a `file://` link only opens on that laptop; once hosted
